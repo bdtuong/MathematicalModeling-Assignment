@@ -1,0 +1,38 @@
+{
+  "places": [
+    {
+      "id": "P0",
+      "m0": 1
+    },
+    {
+      "id": "P1",
+      "m0": 0
+    }
+  ],
+  "transitions": [
+    {
+      "id": "T0"
+    }
+  ],
+  "arcs": [
+    {
+      "id": "P0_TO_T0",
+      "src": "P0",
+      "target": "T0",
+      "ins": 1
+    },
+    {
+      "id": "T0_TO_P1",
+      "src": "T0",
+      "target": "P1",
+      "ins": 1
+    }
+  ],
+  "M0": [
+    1,
+    0
+  ],
+  "Places": 2,
+  "Transitions": 1,
+  "Arcs": 2
+}

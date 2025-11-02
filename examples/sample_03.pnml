@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pnml>
+  <net id="WarehouseDualLine">
+    <token id="Default" red="0" green="0" blue="0"/>
+
+    <!-- ========= LINE 1 ========= -->
+    <place id="Line1_In">
+      <graphics><position x="100" y="100"/></graphics>
+      <name><value>Line-1 Input</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,1</value></initialMarking>
+    </place>
+
+    <place id="Line1_Buf">
+      <graphics><position x="250" y="100"/></graphics>
+      <name><value>Line-1 Buffer</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,0</value></initialMarking>
+    </place>
+
+    <place id="Line1_Proc1">
+      <graphics><position x="400" y="100"/></graphics>
+      <name><value>Line-1 Step A</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,0</value></initialMarking>
+    </place>
+
+    <place id="Line1_Proc2">
+      <graphics><position x="550" y="100"/></graphics>
+      <name><value>Line-1 Step B</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,0</value></initialMarking>
+    </place>
+
+    <place id="Line1_QC">
+      <graphics><position x="700" y="100"/></graphics>
+      <name><value>Line-1 QC</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,0</value></initialMarking>
+    </place>
+
+    <place id="Line1_Reject">
+      <graphics><position x="850" y="200"/></graphics>
+      <name><value>Line-1 Reject</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,0</value></initialMarking>
+    </place>
+
+    <!-- ========= LINE 2 ========= -->
+    <place id="Line2_In">
+      <graphics><position x="100" y="300"/></graphics>
+      <name><value>Line-2 Input</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,1</value></initialMarking>
+    </place>
+
+    <place id="Line2_Buf">
+      <graphics><position x="250" y="300"/></graphics>
+      <name><value>Line-2 Buffer</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,0</value></initialMarking>
+    </place>
+
+    <place id="Line2_Proc1">
+      <graphics><position x="400" y="300"/></graphics>
+      <name><value>Line-2 Step X</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,0</value></initialMarking>
+    </place>
+
+    <place id="Line2_Proc2">
+      <graphics><position x="550" y="300"/></graphics>
+      <name><value>Line-2 Step Y</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,0</value></initialMarking>
+    </place>
+
+    <place id="Line2_QC">
+      <graphics><position x="700" y="300"/></graphics>
+      <name><value>Line-2 QC</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,0</value></initialMarking>
+    </place>
+
+    <!-- ========= SHARED OUTPUT ========= -->
+    <place id="Collector">
+      <graphics><position x="900" y="150"/></graphics>
+      <name><value>Finished Goods</value></name>
+      <capacity><value>1</value></capacity>
+      <initialMarking><value>Default,0</value></initialMarking>
+    </place>
+
+    <!-- ========= TRANSITIONS ========= -->
+    <transition id="T1_Start">
+      <graphics><position x="175" y="100"/></graphics>
+      <name><value>Start Line-1</value></name>
+    </transition>
+
+    <transition id="T1_A">
+      <graphics><position x="325" y="100"/></graphics>
+      <name><value>Line-1 Step A</value></name>
+    </transition>
+
+    <transition id="T1_B">
+      <graphics><position x="475" y="100"/></graphics>
+      <name><value>Line-1 Step B</value></name>
+    </transition>
+
+    <transition id="T1_Pass">
+      <graphics><position x="625" y="100"/></graphics>
+      <name><value>Line-1 QC Pass</value></name>
+    </transition>
+
+    <transition id="T1_Reject">
+      <graphics><position x="625" y="200"/></graphics>
+      <name><value>Line-1 QC Fail</value></name>
+    </transition>
+
+    <transition id="T2_Start">
+      <graphics><position x="175" y="300"/></graphics>
+      <name><value>Start Line-2</value></name>
+    </transition>
+
+    <transition id="T2_X">
+      <graphics><position x="325" y="300"/></graphics>
+      <name><value>Line-2 Step X</value></name>
+    </transition>
+
+    <transition id="T2_Y">
+      <graphics><position x="475" y="300"/></graphics>
+      <name><value>Line-2 Step Y</value></name>
+    </transition>
+
+    <transition id="T2_Pass">
+      <graphics><position x="625" y="300"/></graphics>
+      <name><value>Line-2 QC Pass</value></name>
+    </transition>
+
+    <transition id="T_Collect">
+      <graphics><position x="800" y="150"/></graphics>
+      <name><value>Merge to Collector</value></name>
+    </transition>
+
+    <!-- ========= ARCS (weight = 1, type=normal) ========= -->
+    <!-- Line 1 -->
+    <arc id="A1" source="Line1_In" target="T1_Start">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="A2" source="T1_Start" target="Line1_Buf">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="A3" source="Line1_Buf" target="T1_A">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="A4" source="T1_A" target="Line1_Proc1">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="A5" source="Line1_Proc1" target="T1_B">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="A6" source="T1_B" target="Line1_Proc2">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="A7" source="Line1_Proc2" target="T1_Pass">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="A8" source="Line1_Proc2" target="T1_Reject">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="A9" source="T1_Pass" target="Line1_QC">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="A10" source="T1_Reject" target="Line1_Reject">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="A11" source="Line1_Reject" target="T1_Start">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+
+    <!-- Line 2 -->
+    <arc id="B1" source="Line2_In" target="T2_Start">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="B2" source="T2_Start" target="Line2_Buf">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="B3" source="Line2_Buf" target="T2_X">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="B4" source="T2_X" target="Line2_Proc1">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="B5" source="Line2_Proc1" target="T2_Y">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="B6" source="T2_Y" target="Line2_Proc2">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="B7" source="Line2_Proc2" target="T2_Pass">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="B8" source="T2_Pass" target="Line2_QC">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+
+    <!-- Merge -->
+    <arc id="C1" source="Line1_QC" target="T_Collect">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="C2" source="Line2_QC" target="T_Collect">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+    <arc id="C3" source="T_Collect" target="Collector">
+      <type value="normal"/>
+      <inscription><value>Default,1</value></inscription>
+    </arc>
+
+  </net>
+</pnml>

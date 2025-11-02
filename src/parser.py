@@ -50,11 +50,16 @@ def parse_pnml(file_path: str):
     trans_ids = {t["id"] for t in transitions}
     node_ids = place_ids | trans_ids
 
-    # Check duplicate IDs
+    # Check duplicate IDs between places and transitions
     all_ids = [p["id"] for p in places] + [t["id"] for t in transitions]
     if len(all_ids) != len(set(all_ids)):
-        raise ValueError("Duplicate IDs detected")
+        raise ValueError("Duplicate IDs detected detected between places and transitions")
 
+    # Check duplicate arc IDs
+    arc_ids = [a["id"] for a in arcs]
+    if len(arc_ids) != len(set(arc_ids)):
+        raise ValueError("Duplicate arc IDs detected")
+    
     # Check arc validity
     for arc in arcs:
         src, target = arc["src"], arc["target"]
@@ -63,8 +68,21 @@ def parse_pnml(file_path: str):
         if (src in place_ids and target in place_ids) or (src in trans_ids and target in trans_ids):
             raise ValueError(f"Invalid arc direction in {arc['id']}: {src} → {target}")
 
+    # Check for isolated nodes (warning)
+    connected_nodes = {a["src"] for a in arcs} | {a["target"] for a in arcs}
+    unconnected_nodes = node_ids - connected_nodes
+    if unconnected_nodes:
+        print(f"[Warning] Isolated nodes detected (not connected to any arc): {unconnected_nodes}")
+    
     # Compute M0 vector 
     M0 = [p["m0"] for p in places]
+
+
+    # --- 1-safe check ---
+    for p in places:
+        if p["m0"] > 1:
+            raise ValueError(f"Place {p['id']} has {p['m0']} tokens initially, violating 1-safe property")
+
 
     # Return final structure 
     return {

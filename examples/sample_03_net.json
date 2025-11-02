@@ -1,0 +1,235 @@
+{
+  "places": [
+    {
+      "id": "Line1_In",
+      "m0": 1
+    },
+    {
+      "id": "Line1_Buf",
+      "m0": 0
+    },
+    {
+      "id": "Line1_Proc1",
+      "m0": 0
+    },
+    {
+      "id": "Line1_Proc2",
+      "m0": 0
+    },
+    {
+      "id": "Line1_QC",
+      "m0": 0
+    },
+    {
+      "id": "Line1_Reject",
+      "m0": 0
+    },
+    {
+      "id": "Line2_In",
+      "m0": 1
+    },
+    {
+      "id": "Line2_Buf",
+      "m0": 0
+    },
+    {
+      "id": "Line2_Proc1",
+      "m0": 0
+    },
+    {
+      "id": "Line2_Proc2",
+      "m0": 0
+    },
+    {
+      "id": "Line2_QC",
+      "m0": 0
+    },
+    {
+      "id": "Collector",
+      "m0": 0
+    }
+  ],
+  "transitions": [
+    {
+      "id": "T1_Start"
+    },
+    {
+      "id": "T1_A"
+    },
+    {
+      "id": "T1_B"
+    },
+    {
+      "id": "T1_Pass"
+    },
+    {
+      "id": "T1_Reject"
+    },
+    {
+      "id": "T2_Start"
+    },
+    {
+      "id": "T2_X"
+    },
+    {
+      "id": "T2_Y"
+    },
+    {
+      "id": "T2_Pass"
+    },
+    {
+      "id": "T_Collect"
+    }
+  ],
+  "arcs": [
+    {
+      "id": "A1",
+      "src": "Line1_In",
+      "target": "T1_Start",
+      "ins": 1
+    },
+    {
+      "id": "A2",
+      "src": "T1_Start",
+      "target": "Line1_Buf",
+      "ins": 1
+    },
+    {
+      "id": "A3",
+      "src": "Line1_Buf",
+      "target": "T1_A",
+      "ins": 1
+    },
+    {
+      "id": "A4",
+      "src": "T1_A",
+      "target": "Line1_Proc1",
+      "ins": 1
+    },
+    {
+      "id": "A5",
+      "src": "Line1_Proc1",
+      "target": "T1_B",
+      "ins": 1
+    },
+    {
+      "id": "A6",
+      "src": "T1_B",
+      "target": "Line1_Proc2",
+      "ins": 1
+    },
+    {
+      "id": "A7",
+      "src": "Line1_Proc2",
+      "target": "T1_Pass",
+      "ins": 1
+    },
+    {
+      "id": "A8",
+      "src": "Line1_Proc2",
+      "target": "T1_Reject",
+      "ins": 1
+    },
+    {
+      "id": "A9",
+      "src": "T1_Pass",
+      "target": "Line1_QC",
+      "ins": 1
+    },
+    {
+      "id": "A10",
+      "src": "T1_Reject",
+      "target": "Line1_Reject",
+      "ins": 1
+    },
+    {
+      "id": "A11",
+      "src": "Line1_Reject",
+      "target": "T1_Start",
+      "ins": 1
+    },
+    {
+      "id": "B1",
+      "src": "Line2_In",
+      "target": "T2_Start",
+      "ins": 1
+    },
+    {
+      "id": "B2",
+      "src": "T2_Start",
+      "target": "Line2_Buf",
+      "ins": 1
+    },
+    {
+      "id": "B3",
+      "src": "Line2_Buf",
+      "target": "T2_X",
+      "ins": 1
+    },
+    {
+      "id": "B4",
+      "src": "T2_X",
+      "target": "Line2_Proc1",
+      "ins": 1
+    },
+    {
+      "id": "B5",
+      "src": "Line2_Proc1",
+      "target": "T2_Y",
+      "ins": 1
+    },
+    {
+      "id": "B6",
+      "src": "T2_Y",
+      "target": "Line2_Proc2",
+      "ins": 1
+    },
+    {
+      "id": "B7",
+      "src": "Line2_Proc2",
+      "target": "T2_Pass",
+      "ins": 1
+    },
+    {
+      "id": "B8",
+      "src": "T2_Pass",
+      "target": "Line2_QC",
+      "ins": 1
+    },
+    {
+      "id": "C1",
+      "src": "Line1_QC",
+      "target": "T_Collect",
+      "ins": 1
+    },
+    {
+      "id": "C2",
+      "src": "Line2_QC",
+      "target": "T_Collect",
+      "ins": 1
+    },
+    {
+      "id": "C3",
+      "src": "T_Collect",
+      "target": "Collector",
+      "ins": 1
+    }
+  ],
+  "M0": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "Places": 12,
+  "Transitions": 10,
+  "Arcs": 22
+}
