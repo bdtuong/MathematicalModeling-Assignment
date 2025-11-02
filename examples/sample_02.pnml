@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pnml>
+    <net id="net1">
+        <token id="Default" red="0" green="0" blue="0"/>
+        
+        <!-- Place initially has 1 token -->
+        <place id="P0">
+            <graphics>
+                <position x="100.0" y="100.0"/>
+            </graphics>
+            <name>
+                <value>P0</value>
+            </name>
+            <capacity>
+                <value>1</value>
+            </capacity>
+            <initialMarking>
+                <value>Default,1</value>
+            </initialMarking>
+        </place>
+        
+        <!-- Place is initially empty -->
+        <place id="P1">
+            <graphics>
+                <position x="300.0" y="100.0"/>
+            </graphics>
+            <name>
+                <value>P1</value>
+            </name>
+            <capacity>
+                <value>1</value>
+            </capacity>
+            <initialMarking>
+                <value>Default,0</value>
+            </initialMarking>
+        </place>
+
+        <!-- Transition -->
+        <transition id="T0">
+            <graphics>
+                <position x="200.0" y="100.0"/>
+            </graphics>
+            <name>
+                <value>T0</value>
+            </name>
+        </transition>
+
+        <!-- Arcs -->
+        <arc id="P0_TO_T0" source="P0" target="T0">
+            <type value="normal"/>
+            <inscription>
+                <value>Default,1</value>
+            </inscription>
+        </arc>
+
+        <arc id="T0_TO_P1" source="T0" target="P1">
+            <type value="normal"/>
+            <inscription>
+                <value>Default,1</value>
+            </inscription>
+        </arc>
+    </net>
+</pnml>
