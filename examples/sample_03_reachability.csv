@@ -1,0 +1,6 @@
+State_ID,Depth,Line1_In,Line1_Buf,Line1_Proc1,Line1_Proc2,Line1_QC,Line1_Reject,Line2_In,Line2_Buf,Line2_Proc1,Line2_Proc2,Line2_QC,Collector
+S0,0,1,0,0,0,0,0,1,0,0,0,0,0
+S1,1,1,0,0,0,0,0,0,1,0,0,0,0
+S2,2,1,0,0,0,0,0,0,0,1,0,0,0
+S3,3,1,0,0,0,0,0,0,0,0,1,0,0
+S4,4,1,0,0,0,0,0,0,0,0,0,1,0
