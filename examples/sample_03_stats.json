@@ -1,0 +1,25 @@
+{
+  "file": "examples/sample_03.pnml",
+  "num_places": 12,
+  "num_transitions": 10,
+  "num_arcs": 22,
+  "initial_marking": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "bfs": {
+    "num_reachable_states": 5,
+    "execution_time_sec": 0.000186,
+    "max_depth": 4
+  }
+}
