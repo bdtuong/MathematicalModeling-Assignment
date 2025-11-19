@@ -8,6 +8,9 @@ from rich.console import Console
 from pathlib import Path
 from transition import enabled, fire
 from bfs import bfs_reachable_markings_with_depth
+from bdd_reachability import run_symbolic_reachability
+
+
 
 console = Console()
 
@@ -94,15 +97,36 @@ def main():
                     "max_depth": max(depth_map.values()) if depth_map else 0
                 }
             }
+            # --- Run BDD symbolic reachability after BFS ---
+            console.print("\n[bold yellow]Running BDD symbolic reachability...[/bold yellow]")
+            start_bdd = time.time()
+            #total_bdd, bdd_mem = run_symbolic_reachability(result, str(pnml_file))
+            bdd_result = run_symbolic_reachability(result, str(pnml_file), csv_file=str(output_csv))
+            end_bdd = time.time()
+            bdd_time = end_bdd - start_bdd
+
+            # --- Add BDD results to stats ---
+            stats["bdd"] = {
+                "num_reachable_states": bdd_result["bdd"]["num_reachable_states"],
+                "bdd_memory_bytes": bdd_result["bdd"]["bdd_memory_bytes"],
+                "execution_time_sec": bdd_result["bdd"]["execution_time_sec"],
+                "bdd_nodes": bdd_result["bdd"]["bdd_nodes"]
+            }
+
+            # --- Save stats JSON after BDD ---
             with open(output_stats, "w", encoding="utf-8") as f:
                 json.dump(stats, f, indent=2)
             console.print(f"[bold magenta]Saved statistics to:[/bold magenta] {output_stats}")
 
             # --- In tóm tắt ---
             console.print(f"\n[bold white]Summary:[/bold white]")
-            console.print(f"  • Reachable states: {num_states}")
+            console.print(f"  • Reachable states (BFS): {num_states}")
             console.print(f"  • BFS time: {bfs_time:.6f}s")
             console.print(f"  • Max depth: {stats['bfs']['max_depth']}")
+            console.print(f"  • Reachable states (BDD): {bdd_result['bdd']['num_reachable_states']}")
+            console.print(f"  • BDD memory (bytes): {bdd_result['bdd']['bdd_memory_bytes']}")
+            console.print(f"  • BDD nodes: {bdd_result['bdd']['bdd_nodes']}")
+            console.print(f"  • BDD time: {bdd_result['bdd']['execution_time_sec']:.6f}s")
 
         except Exception as e:
             console.print(f"[bold red]Error processing {pnml_file}:[/bold red] {e}")

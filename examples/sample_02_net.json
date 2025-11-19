@@ -19,13 +19,13 @@
       "id": "P0_TO_T0",
       "src": "P0",
       "target": "T0",
-      "ins": 1
+      "weight": 1
     },
     {
       "id": "T0_TO_P1",
       "src": "T0",
       "target": "P1",
-      "ins": 1
+      "weight": 1
     }
   ],
   "M0": [
