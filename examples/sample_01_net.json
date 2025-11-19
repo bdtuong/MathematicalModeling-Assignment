@@ -26,25 +26,25 @@
       "id": "a1",
       "src": "p_start",
       "target": "t_proc",
-      "ins": 1
+      "weight": 1
     },
     {
       "id": "a2",
       "src": "t_proc",
       "target": "p_mid",
-      "ins": 1
+      "weight": 1
     },
     {
       "id": "a3",
       "src": "p_mid",
       "target": "t_done",
-      "ins": 1
+      "weight": 1
     },
     {
       "id": "a4",
       "src": "t_done",
       "target": "p_end",
-      "ins": 1
+      "weight": 1
     }
   ],
   "M0": [

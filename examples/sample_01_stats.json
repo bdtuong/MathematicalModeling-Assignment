@@ -1,5 +1,5 @@
 {
-  "file": "examples/sample_01.pnml",
+  "file": "examples\\sample_01.pnml",
   "num_places": 3,
   "num_transitions": 2,
   "num_arcs": 4,
@@ -10,7 +10,13 @@
   ],
   "bfs": {
     "num_reachable_states": 3,
-    "execution_time_sec": 0.000247,
+    "execution_time_sec": 7.4e-05,
     "max_depth": 2
+  },
+  "bdd": {
+    "num_reachable_states": 3,
+    "bdd_memory_bytes": 23792,
+    "execution_time_sec": 0.00066,
+    "bdd_nodes": 5
   }
 }
