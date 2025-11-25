@@ -10,13 +10,24 @@
   ],
   "bfs": {
     "num_reachable_states": 3,
-    "execution_time_sec": 7.4e-05,
+    "execution_time_sec": 5.2e-05,
     "max_depth": 2
+  },
+  "ilp": {
+    "status": "Optimal",
+    "deadlock_marking": {
+      "p_start": 0,
+      "p_mid": 0,
+      "p_end": 1
+    },
+    "runtime_sec": 0.01784,
+    "num_vars": 5,
+    "num_constraints": 5
   },
   "bdd": {
     "num_reachable_states": 3,
     "bdd_memory_bytes": 23792,
-    "execution_time_sec": 0.00066,
+    "execution_time_sec": 0.001067,
     "bdd_nodes": 5
   }
 }

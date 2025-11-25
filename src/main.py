@@ -9,7 +9,7 @@ from pathlib import Path
 from transition import enabled, fire
 from bfs import bfs_reachable_markings_with_depth
 from bdd_reachability import run_symbolic_reachability
-
+from ilp_deadlock import solve_deadlock_ilp
 
 
 console = Console()
@@ -104,6 +104,37 @@ def main():
             bdd_result = run_symbolic_reachability(result, str(pnml_file), csv_file=str(output_csv))
             end_bdd = time.time()
             bdd_time = end_bdd - start_bdd
+
+            # --- ILP Deadlock detection ---
+            console.print("\n[bold yellow]Running ILP deadlock detection...[/bold yellow]")
+
+            # dùng max_depth BFS làm bound cho sigma_t
+            max_depth = stats["bfs"]["max_depth"]
+
+            ilp_result = solve_deadlock_ilp(result, max_firing_bound=max_depth)
+
+            console.print(f"[bold white]ILP status:[/bold white] {ilp_result['status']}")
+            if ilp_result["deadlock_marking"] is not None:
+                console.print(f"[bold green]Deadlock marking (ILP):[/bold green] {ilp_result['deadlock_marking']}")
+            else:
+                console.print("[bold red]No deadlock found by ILP (or model infeasible).[/bold red]")
+
+            console.print(f"  • ILP runtime: {ilp_result['runtime_sec']:.6f}s")
+            console.print(f"  • #vars: {ilp_result['num_vars']}")
+            console.print(f"  • #constraints: {ilp_result['num_constraints']}")
+
+            # Ghi thêm vào stats.json
+            stats["ilp"] = {
+                "status": ilp_result["status"],
+                "deadlock_marking": ilp_result["deadlock_marking"],
+                "runtime_sec": round(ilp_result["runtime_sec"], 6),
+                "num_vars": ilp_result["num_vars"],
+                "num_constraints": ilp_result["num_constraints"]
+            }
+
+            with open(output_stats, "w", encoding="utf-8") as f:
+                json.dump(stats, f, indent=2)
+            console.print(f"[bold magenta]Updated statistics (with ILP) to:[/bold magenta] {output_stats}")
 
             # --- Add BDD results to stats ---
             stats["bdd"] = {
