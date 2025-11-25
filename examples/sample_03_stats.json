@@ -19,7 +19,7 @@
   ],
   "bfs": {
     "num_reachable_states": 5,
-    "execution_time_sec": 0.000125,
+    "execution_time_sec": 0.000141,
     "max_depth": 4
   },
   "ilp": {
@@ -38,14 +38,14 @@
       "Line2_QC": 1,
       "Collector": 0
     },
-    "runtime_sec": 0.019022,
+    "runtime_sec": 0.022622,
     "num_vars": 22,
     "num_constraints": 22
   },
   "bdd": {
     "num_reachable_states": 5,
     "bdd_memory_bytes": 782216,
-    "execution_time_sec": 0.004378,
+    "execution_time_sec": 0.003026,
     "bdd_nodes": 17
   }
 }

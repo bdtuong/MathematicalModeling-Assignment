@@ -61,7 +61,7 @@ def solve_deadlock_ilp(net, max_firing_bound=None):
     # Find M0 in net["places"]
     M0 = {p["id"]: p["m0"] for p in net["places"]}
 
-
+    # State equation constraints
     for p in places:
         inflow = pulp.lpSum(post[t].get(p, 0) * sigma[t] for t in transitions)
         outflow = pulp.lpSum(pre[t].get(p, 0) * sigma[t] for t in transitions)
@@ -71,22 +71,19 @@ def solve_deadlock_ilp(net, max_firing_bound=None):
             f"state_eq_{p}"
         )
 
-    # --- Ràng buộc deadlock: với mỗi transition, tổng m_p <= |Pre(t)| - 1 ---
+    # Deadlock constraints that ensure at least one input place of each transition is unmarked
     for t in transitions:
         pre_places = list(pre[t].keys())
         if not pre_places:
-            # Nếu có transition không có input thì thực tế luôn enabled.
-            # Tùy bạn: có thể để net "không deadlock", hoặc bỏ qua ràng buộc.
             continue
-
         prob += (
             pulp.lpSum(m[p] for p in pre_places) <= len(pre_places) - 1,
             f"deadlock_{t}"
         )
 
-    # --- Giải ILP ---
+    # --- Solve ILP ---
     start = time.time()
-    status = prob.solve()        # dùng solver mặc định của PuLP
+    status = prob.solve()        
     end = time.time()
 
     status_str = pulp.LpStatus[status]
@@ -102,7 +99,7 @@ def solve_deadlock_ilp(net, max_firing_bound=None):
     if status_str not in ("Optimal", "Feasible"):
         return result
 
-    # Lấy marking
+    # Get marking
     marking = {p: int(round(m[p].value())) for p in places}
     result["deadlock_marking"] = marking
 

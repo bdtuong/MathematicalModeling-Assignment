@@ -108,7 +108,7 @@ def main():
             # --- ILP Deadlock detection ---
             console.print("\n[bold yellow]Running ILP deadlock detection...[/bold yellow]")
 
-            # dùng max_depth BFS làm bound cho sigma_t
+            # Bound sigma_t with max depth from BFS
             max_depth = stats["bfs"]["max_depth"]
 
             ilp_result = solve_deadlock_ilp(result, max_firing_bound=max_depth)
@@ -123,7 +123,7 @@ def main():
             console.print(f"  • #vars: {ilp_result['num_vars']}")
             console.print(f"  • #constraints: {ilp_result['num_constraints']}")
 
-            # Ghi thêm vào stats.json
+            # Write into stats.json
             stats["ilp"] = {
                 "status": ilp_result["status"],
                 "deadlock_marking": ilp_result["deadlock_marking"],
