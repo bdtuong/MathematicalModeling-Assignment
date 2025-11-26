@@ -19,7 +19,7 @@
   ],
   "bfs": {
     "num_reachable_states": 5,
-    "execution_time_sec": 0.000141,
+    "execution_time_sec": 0.000143,
     "max_depth": 4
   },
   "ilp": {
@@ -38,14 +38,22 @@
       "Line2_QC": 1,
       "Collector": 0
     },
-    "runtime_sec": 0.022622,
+    "runtime_sec": 0.021734,
     "num_vars": 22,
     "num_constraints": 22
+  },
+  "bdd_deadlock": {
+    "status": "OK",
+    "mode": "EXPLICIT",
+    "runtime_sec": 0.21049,
+    "num_deadlocks_listed": 1,
+    "reachable_states_est": 5,
+    "bdd_nodes": null
   },
   "bdd": {
     "num_reachable_states": 5,
     "bdd_memory_bytes": 782216,
-    "execution_time_sec": 0.003026,
+    "execution_time_sec": 0.003238,
     "bdd_nodes": 17
   }
 }
