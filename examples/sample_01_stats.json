@@ -10,7 +10,7 @@
   ],
   "bfs": {
     "num_reachable_states": 3,
-    "execution_time_sec": 6e-05,
+    "execution_time_sec": 5.6e-05,
     "max_depth": 2
   },
   "ilp": {
@@ -20,14 +20,14 @@
       "p_mid": 0,
       "p_end": 1
     },
-    "runtime_sec": 0.017904,
+    "runtime_sec": 0.018674,
     "num_vars": 5,
     "num_constraints": 5
   },
   "bdd_deadlock": {
     "status": "OK",
     "mode": "EXPLICIT",
-    "runtime_sec": 0.000284,
+    "runtime_sec": 0.000285,
     "num_deadlocks_listed": 1,
     "reachable_states_est": 3,
     "bdd_nodes": null
@@ -37,9 +37,9 @@
     "objective_weights": {
       "p_start": 1,
       "p_mid": 1,
-      "p_end": 10
+      "p_end": 5
     },
-    "best_value": 10,
+    "best_value": 5,
     "best_marking": {
       "p_start": 0,
       "p_mid": 0,
@@ -51,7 +51,7 @@
   "bdd": {
     "num_reachable_states": 3,
     "bdd_memory_bytes": 23792,
-    "execution_time_sec": 0.000626,
+    "execution_time_sec": 0.001004,
     "bdd_nodes": 5
   }
 }

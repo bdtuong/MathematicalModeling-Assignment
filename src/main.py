@@ -82,7 +82,7 @@ def main():
             for p in result["places"]:
                 pid = p["id"].lower()
             if "collector" in pid or "end" in pid or "qc" in pid:
-                weights[p["id"]] = 10
+                weights[p["id"]] = 5
             else:
                 weights[p["id"]] = 1
 
