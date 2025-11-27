@@ -9,8 +9,8 @@ from pathlib import Path
 from transition import enabled, fire
 from bfs import bfs_reachable_markings_with_depth
 from bdd_reachability import run_symbolic_reachability
-
-
+from ilp_deadlock import solve_deadlock_ilp
+from bdd_deadlock import solve_deadlock_bdd
 
 console = Console()
 
@@ -104,6 +104,66 @@ def main():
             bdd_result = run_symbolic_reachability(result, str(pnml_file), csv_file=str(output_csv))
             end_bdd = time.time()
             bdd_time = end_bdd - start_bdd
+
+                        # --- BDD-based Deadlock detection ---
+            console.print("\n[bold yellow]Running BDD-based deadlock detection...[/bold yellow]")
+
+            bdd_deadlock = solve_deadlock_bdd(result, sample_limit=5)
+
+            console.print(f"[bold white]BDD-deadlock status:[/bold white] {bdd_deadlock['status']}")
+            console.print(f"  • mode: {bdd_deadlock['mode']}")
+            console.print(f"  • runtime: {bdd_deadlock['runtime_sec']:.6f}s")
+            console.print(f"  • reachable states (est): {bdd_deadlock['reachable_states_est']}")
+            console.print(f"  • BDD nodes (if BDD mode): {bdd_deadlock['bdd_nodes']}")
+
+            if bdd_deadlock["deadlock_markings"]:
+                console.print("[bold green]Some deadlock markings (BDD):[/bold green]")
+                for m in bdd_deadlock["deadlock_markings"]:
+                    console.print(f"    {m}")
+            else:
+                console.print("[bold cyan]No deadlock reachable (BDD / explicit mode).[/bold cyan]")
+
+        
+            # --- ILP Deadlock detection ---
+            console.print("\n[bold yellow]Running ILP deadlock detection...[/bold yellow]")
+
+            # Bound sigma_t with max depth from BFS
+            max_depth = stats["bfs"]["max_depth"]
+
+            ilp_result = solve_deadlock_ilp(result, max_firing_bound=max_depth)
+
+            console.print(f"[bold white]ILP status:[/bold white] {ilp_result['status']}")
+            if ilp_result["deadlock_marking"] is not None:
+                console.print(f"[bold green]Deadlock marking (ILP):[/bold green] {ilp_result['deadlock_marking']}")
+            else:
+                console.print("[bold red]No deadlock found by ILP (or model infeasible).[/bold red]")
+
+            console.print(f"  • ILP runtime: {ilp_result['runtime_sec']:.6f}s")
+            console.print(f"  • #vars: {ilp_result['num_vars']}")
+            console.print(f"  • #constraints: {ilp_result['num_constraints']}")
+
+            # Write into stats.json
+            stats["ilp"] = {
+                "status": ilp_result["status"],
+                "deadlock_marking": ilp_result["deadlock_marking"],
+                "runtime_sec": round(ilp_result["runtime_sec"], 6),
+                "num_vars": ilp_result["num_vars"],
+                "num_constraints": ilp_result["num_constraints"]
+            }
+
+             # Write BDD deadlock stats
+            stats["bdd_deadlock"] = {
+            "status": bdd_deadlock["status"],
+            "mode": bdd_deadlock["mode"],
+            "runtime_sec": round(bdd_deadlock["runtime_sec"], 6),
+            "num_deadlocks_listed": bdd_deadlock["num_deadlocks_listed"],
+            "reachable_states_est": bdd_deadlock["reachable_states_est"],
+            "bdd_nodes": bdd_deadlock["bdd_nodes"],
+            }
+
+            with open(output_stats, "w", encoding="utf-8") as f:
+                json.dump(stats, f, indent=2)
+            console.print(f"[bold magenta]Updated statistics (with ILP) to:[/bold magenta] {output_stats}")
 
             # --- Add BDD results to stats ---
             stats["bdd"] = {
