@@ -19,7 +19,7 @@
   ],
   "bfs": {
     "num_reachable_states": 5,
-    "execution_time_sec": 0.000174,
+    "execution_time_sec": 0.000176,
     "max_depth": 4
   },
   "ilp": {
@@ -38,22 +38,56 @@
       "Line2_QC": 1,
       "Collector": 0
     },
-    "runtime_sec": 0.019246,
+    "runtime_sec": 0.020354,
     "num_vars": 22,
     "num_constraints": 22
   },
   "bdd_deadlock": {
     "status": "OK",
     "mode": "EXPLICIT",
-    "runtime_sec": 0.21049,
+    "runtime_sec": 0.21536,
     "num_deadlocks_listed": 1,
     "reachable_states_est": 5,
     "bdd_nodes": null
   },
+  "opt": {
+    "status": "OPTIMAL",
+    "objective_weights": {
+      "Line1_In": 1,
+      "Line1_Buf": 1,
+      "Line1_Proc1": 1,
+      "Line1_Proc2": 1,
+      "Line1_QC": 1,
+      "Line1_Reject": 1,
+      "Line2_In": 1,
+      "Line2_Buf": 1,
+      "Line2_Proc1": 1,
+      "Line2_Proc2": 1,
+      "Line2_QC": 1,
+      "Collector": 10
+    },
+    "best_value": 2,
+    "best_marking": {
+      "Line1_In": 1,
+      "Line1_Buf": 0,
+      "Line1_Proc1": 0,
+      "Line1_Proc2": 0,
+      "Line1_QC": 0,
+      "Line1_Reject": 0,
+      "Line2_In": 1,
+      "Line2_Buf": 0,
+      "Line2_Proc1": 0,
+      "Line2_Proc2": 0,
+      "Line2_QC": 0,
+      "Collector": 0
+    },
+    "runtime_sec": 1e-05,
+    "num_states": 5
+  },
   "bdd": {
     "num_reachable_states": 5,
     "bdd_memory_bytes": 782216,
-    "execution_time_sec": 0.004027,
+    "execution_time_sec": 0.002638,
     "bdd_nodes": 17
   }
 }

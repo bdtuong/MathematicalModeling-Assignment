@@ -20,22 +20,38 @@
       "p_mid": 0,
       "p_end": 1
     },
-    "runtime_sec": 0.0168,
+    "runtime_sec": 0.017904,
     "num_vars": 5,
     "num_constraints": 5
   },
   "bdd_deadlock": {
     "status": "OK",
     "mode": "EXPLICIT",
-    "runtime_sec": 0.000306,
+    "runtime_sec": 0.000284,
     "num_deadlocks_listed": 1,
     "reachable_states_est": 3,
     "bdd_nodes": null
   },
+  "opt": {
+    "status": "OPTIMAL",
+    "objective_weights": {
+      "p_start": 1,
+      "p_mid": 1,
+      "p_end": 10
+    },
+    "best_value": 10,
+    "best_marking": {
+      "p_start": 0,
+      "p_mid": 0,
+      "p_end": 1
+    },
+    "runtime_sec": 5e-06,
+    "num_states": 3
+  },
   "bdd": {
     "num_reachable_states": 3,
     "bdd_memory_bytes": 23792,
-    "execution_time_sec": 0.000654,
+    "execution_time_sec": 0.000626,
     "bdd_nodes": 5
   }
 }
