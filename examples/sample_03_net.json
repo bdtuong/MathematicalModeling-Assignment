@@ -2,83 +2,105 @@
   "places": [
     {
       "id": "Line1_In",
+      "name": "Line1_In",
       "m0": 1
     },
     {
       "id": "Line1_Buf",
+      "name": "Line1_Buf",
       "m0": 0
     },
     {
       "id": "Line1_Proc1",
+      "name": "Line1_Proc1",
       "m0": 0
     },
     {
       "id": "Line1_Proc2",
+      "name": "Line1_Proc2",
       "m0": 0
     },
     {
       "id": "Line1_QC",
+      "name": "Line1_QC",
       "m0": 0
     },
     {
       "id": "Line1_Reject",
+      "name": "Line1_Reject",
       "m0": 0
     },
     {
       "id": "Line2_In",
+      "name": "Line2_In",
       "m0": 1
     },
     {
       "id": "Line2_Buf",
+      "name": "Line2_Buf",
       "m0": 0
     },
     {
       "id": "Line2_Proc1",
+      "name": "Line2_Proc1",
       "m0": 0
     },
     {
       "id": "Line2_Proc2",
+      "name": "Line2_Proc2",
       "m0": 0
     },
     {
       "id": "Line2_QC",
+      "name": "Line2_QC",
       "m0": 0
     },
     {
       "id": "Collector",
+      "name": "Collector",
       "m0": 0
     }
   ],
   "transitions": [
     {
-      "id": "T1_Start"
+      "id": "T1_Start",
+      "name": "T1_Start"
     },
     {
-      "id": "T1_A"
+      "id": "T1_A",
+      "name": "T1_A"
     },
     {
-      "id": "T1_B"
+      "id": "T1_B",
+      "name": "T1_B"
     },
     {
-      "id": "T1_Pass"
+      "id": "T1_Pass",
+      "name": "T1_Pass"
     },
     {
-      "id": "T1_Reject"
+      "id": "T1_Reject",
+      "name": "T1_Reject"
     },
     {
-      "id": "T2_Start"
+      "id": "T2_Start",
+      "name": "T2_Start"
     },
     {
-      "id": "T2_X"
+      "id": "T2_X",
+      "name": "T2_X"
     },
     {
-      "id": "T2_Y"
+      "id": "T2_Y",
+      "name": "T2_Y"
     },
     {
-      "id": "T2_Pass"
+      "id": "T2_Pass",
+      "name": "T2_Pass"
     },
     {
-      "id": "T_Collect"
+      "id": "T_Collect",
+      "name": "T_Collect"
     }
   ],
   "arcs": [

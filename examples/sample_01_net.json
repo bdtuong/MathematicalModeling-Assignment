@@ -2,23 +2,28 @@
   "places": [
     {
       "id": "p_start",
+      "name": "p_start",
       "m0": 1
     },
     {
       "id": "p_mid",
+      "name": "p_mid",
       "m0": 0
     },
     {
       "id": "p_end",
+      "name": "p_end",
       "m0": 0
     }
   ],
   "transitions": [
     {
-      "id": "t_proc"
+      "id": "t_proc",
+      "name": "t_proc"
     },
     {
-      "id": "t_done"
+      "id": "t_done",
+      "name": "t_done"
     }
   ],
   "arcs": [
