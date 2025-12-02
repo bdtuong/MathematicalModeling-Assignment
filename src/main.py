@@ -81,10 +81,11 @@ def main():
             weights = {p["id"]: 1 for p in result["places"]}
             for p in result["places"]:
                 pid = p["id"].lower()
-            if "collector" in pid or "end" in pid or "qc" in pid:
-                weights[p["id"]] = 5
-            else:
-                weights[p["id"]] = 1
+                #print(pid)
+                if "collector" in pid or "end" in pid or "qc" in pid:
+                    weights[p["id"]] = 5
+                else:
+                    weights[p["id"]] = 1
 
             opt_result = optimize_over_reachable(result, reachable_markings, weights)
 
