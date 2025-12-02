@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import re
 from pathlib import Path
 
 def parse_pnml(file_path: str):
@@ -7,8 +8,15 @@ def parse_pnml(file_path: str):
     if not path.exists():
         raise FileNotFoundError(f"File not found: {file_path}")
 
-    tree = ET.parse(path) # XML parse file
-    root = tree.getroot() # take root element such as <pnml>
+    #tree = ET.parse(path) # XML parse file
+    #root = tree.getroot() # take root element such as <pnml>
+
+    with open(path, 'r', encoding='utf-8') as f:
+        xml_content = f.read()
+
+    xml_content = re.sub(r'\sxmlns="[^"]+"', '', xml_content, count=1)
+    
+    root = ET.fromstring(xml_content)
 
     places, transitions, arcs = [], [], [] # Initialize lists
 
@@ -17,6 +25,10 @@ def parse_pnml(file_path: str):
         # Parse places
         for place in net.findall(".//place"):
             pId = place.get("id")
+
+            name_tag = place.find(".//name/text")
+            pName = name_tag.text if name_tag is not None else pId
+
             marking_text = place.findtext("initialMarking/text", default="0").strip()
             try:
                 m0 = int(marking_text)
@@ -24,12 +36,16 @@ def parse_pnml(file_path: str):
                     raise ValueError
             except ValueError:
                 raise ValueError(f"Invalid initialMarking for place {pId}: {marking_text}")
-            places.append({"id": pId, "m0": m0})
+            #places.append({"id": pId, "m0": m0})
+            places.append({"id": pId, "name": pName, "m0": m0})
 
         # Parse transitions 
         for transition in net.findall(".//transition"):
             tId = transition.get("id")
-            transitions.append({"id": tId})
+            name_tag = transition.find(".//name/text")
+            tName = name_tag.text if name_tag is not None else tId
+            #transitions.append({"id": tId})
+            transitions.append({"id": tId, "name": tName})
 
         # Parse arcs 
         for arc in net.findall(".//arc"):
