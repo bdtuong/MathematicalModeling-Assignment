@@ -2,16 +2,19 @@
   "places": [
     {
       "id": "P0",
+      "name": "P0",
       "m0": 1
     },
     {
       "id": "P1",
+      "name": "P1",
       "m0": 0
     }
   ],
   "transitions": [
     {
-      "id": "T0"
+      "id": "T0",
+      "name": "T0"
     }
   ],
   "arcs": [

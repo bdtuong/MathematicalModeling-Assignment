@@ -11,6 +11,8 @@ from bfs import bfs_reachable_markings_with_depth
 from bdd_reachability import run_symbolic_reachability
 from ilp_deadlock import solve_deadlock_ilp
 from bdd_deadlock import solve_deadlock_bdd
+from reachable_marking_optimization import optimize_over_reachable
+
 
 console = Console()
 
@@ -72,6 +74,30 @@ def main():
             end_time = time.time()
             bfs_time = end_time - start_time
             num_states = len(reachable_markings)
+
+            # --- Optimization over reachable markings ---
+            console.print("\n[bold yellow]Running optimization over reachable markings (Task 5)...[/bold yellow]")
+
+            weights = {p["id"]: 1 for p in result["places"]}
+            for p in result["places"]:
+                pid = p["id"].lower()
+                #print(pid)
+                if "collector" in pid or "end" in pid or "qc" in pid:
+                    weights[p["id"]] = 5
+                else:
+                    weights[p["id"]] = 1
+
+            opt_result = optimize_over_reachable(result, reachable_markings, weights)
+
+            console.print(f"[bold white]Optimization status:[/bold white] {opt_result['status']}")
+            if opt_result["status"] == "OPTIMAL":
+                console.print(f"  • Best objective value: {opt_result['best_value']}")
+                console.print(f"  • Best marking:")
+                console.print(f"    {opt_result['best_marking']}")
+                console.print(f"  • Optimization runtime: {opt_result['runtime_sec']:.6f}s")
+            else:
+                console.print("[bold red]No reachable state found for optimization.[/bold red]")
+
 
             # --- Lưu CSV: trạng thái + depth ---
             with open(output_csv, "w", newline="", encoding="utf-8") as f:
@@ -161,6 +187,15 @@ def main():
             "bdd_nodes": bdd_deadlock["bdd_nodes"],
             }
 
+            stats["opt"] = {
+                "status": opt_result["status"],
+                "objective_weights": weights,
+                "best_value": opt_result["best_value"],
+                "best_marking": opt_result["best_marking"],
+                "runtime_sec": round(opt_result["runtime_sec"], 6),
+                "num_states": opt_result["num_states"]
+            }
+
             with open(output_stats, "w", encoding="utf-8") as f:
                 json.dump(stats, f, indent=2)
             console.print(f"[bold magenta]Updated statistics (with ILP) to:[/bold magenta] {output_stats}")
@@ -187,6 +222,9 @@ def main():
             console.print(f"  • BDD memory (bytes): {bdd_result['bdd']['bdd_memory_bytes']}")
             console.print(f"  • BDD nodes: {bdd_result['bdd']['bdd_nodes']}")
             console.print(f"  • BDD time: {bdd_result['bdd']['execution_time_sec']:.6f}s")
+            console.print(f"  • Optimization status: {opt_result['status']}")
+            if opt_result["status"] == "OPTIMAL":
+                console.print(f"  • Best objective value: {opt_result['best_value']}")
 
         except Exception as e:
             console.print(f"[bold red]Error processing {pnml_file}:[/bold red] {e}")
