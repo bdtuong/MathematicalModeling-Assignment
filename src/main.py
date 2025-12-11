@@ -2,17 +2,17 @@ import sys
 import json
 import csv
 import time
-from parser import parse_pnml
+from src.parser import parse_pnml
 from rich import print_json
 from rich.console import Console
 from pathlib import Path
-from transition import enabled, fire
-from bfs import bfs_reachable_markings_with_depth
-from bdd_reachability import run_symbolic_reachability
-from ilp_deadlock import solve_deadlock_ilp
-from bdd_deadlock import solve_deadlock_bdd
-from reachable_marking_optimization import optimize_over_reachable
 
+from src.transition import enabled, fire
+from src.bfs import bfs_reachable_markings_with_depth
+from src.bdd_reachability import run_symbolic_reachability
+from src.ilp_deadlock import solve_deadlock_ilp
+from src.bdd_deadlock import solve_deadlock_bdd
+from src.reachable_marking_optimization import optimize_over_reachable
 
 console = Console()
 
