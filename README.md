@@ -22,6 +22,7 @@ Outputs are written next to each PNML input as JSON/CSV with stats and reachabil
   - main.py — end-to-end pipeline and CLI
 - examples/ — sample PNMLs and generated outputs (.json, .csv, .png)
 - figures/ — images for examples
+- tests/ — basic test cases
 
 
 ## Requirements
@@ -51,7 +52,7 @@ Command:
 python src/main.py examples/sample_01.pnml examples/sample_02.pnml examples/sample_03.pnml
 ```
 
-You can pass any PNML path(s). The parser auto-normalizes arc inscription to `weight` and sets a default initial marking (m0) of 1 for places whose IDs look like starts (contains "start" or is one of p0, line1_in, line2_in) unless provided in PNML.
+You can pass any PNML path(s). The pipeline normalizes arc inscription fields to a `weight` attribute and forces the initial marking m0 = 1 for places whose IDs look like starts (contain "start" or are one of p0, line1_in, line2_in). This overrides PNML if present, as implemented in src/main.py.
 
 
 ## What the pipeline does
@@ -100,7 +101,3 @@ Examples are provided under `examples/`:
 - Module not found: install extras via `pip install dd pympler pulp rich`
 - BDD warnings or fallbacks: if `dd` is not installed or the net is not safe, BDD mode is skipped and explicit search is used where applicable
 - Large nets: explicit BFS can be expensive; prefer BDD mode for large safe nets
-
-
-## License
-MIT
